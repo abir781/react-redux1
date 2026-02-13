@@ -1,33 +1,122 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+
+import { useState } from 'react';
 import './App.css'
+import Counter from './Counter'
+import Justfordemo from './justfordemo';
 
 function App() {
-  const [count, setCount] = useState(0)
+
+
+   
+
+   const countervalue=[
+    {
+      id:1,
+      value:0
+    },
+    {
+      id:2,
+      value:0
+    },
+    {
+      id:3,
+      value:3
+    }
+   ]
+
+   const [number,setnumber]= useState(countervalue);
+  
+  
+      const incfun = (id) =>{
+          console.log(id);
+
+
+          const updatedcounter=number.map((counts)=>{
+            if(counts.id==id){
+              return{
+
+                  ...counts,
+              value: counts.value+1,
+
+              }      
+                        
+            }
+
+             return counts;
+           
+          })
+
+          setnumber(updatedcounter);
+
+          
+  
+          
+      }
+  
+  
+      const decfun =(id)=>{
+  
+  
+          const updatedcounter=number.map((counts)=>{
+            if(counts.id==id && counts.value>0){
+              return{
+
+                  ...counts,
+              value: counts.value-1,
+
+              }      
+                        
+            }
+
+             return counts;
+           
+          })
+
+          setnumber(updatedcounter);
+        
+  
+      }
+
+      const totalcount = number.reduce(
+        (sum,current) => sum+current.value,
+        0
+      );
+
 
   return (
     <>
+
+
+    <div className='flex justify-center items-center gap-10' >
+
+      <div className='mt-[100px]'>
+
+           {
+          number.map(count=>{
+            return(
+              <Counter key={count.id} count={count} incfun={incfun} decfun={decfun}></Counter>
+            )
+          })
+        }
+      
+
+      </div>
+
       <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+
+        <p>{totalcount}</p>
+
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+
+      <Justfordemo></Justfordemo>
+
+      
+     
+
+    </div>
+     
+     
+     
     </>
   )
 }
